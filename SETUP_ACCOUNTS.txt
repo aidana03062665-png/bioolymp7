@@ -1,0 +1,24 @@
+BIOOLYMP 7 — АККАУНТТАРДЫ ҚОСУ (1 рет қана)
+
+1) https://supabase.com -> New project.
+2) Authentication -> Providers -> Email: қосулы болсын.
+3) Мектепте логин+пароль қолдану үшін Authentication settings ішінде Confirm email-ды өшірген ыңғайлы.
+4) SQL Editor -> New query -> supabase-schema.sql файлының БАРЛЫҒЫН қойып -> Run.
+5) Project Settings / API ішінен Project URL және publishable/anon key көшір.
+6) GitHub-та config.js ашып:
+   YOUR_SUPABASE_URL орнына URL,
+   YOUR_SUPABASE_ANON_KEY орнына anon/publishable key қойып Commit changes жаса.
+7) Сайтта өз мұғалім аккаунтыңды тірке (мысалы login: aidana).
+8) Supabase SQL Editor-де:
+   update public.profiles set role='teacher' where username='aidana';
+   Run.
+9) Сайттан шығып, қайта кір. «Мұғалім» бөлімі пайда болады.
+
+ОҚУШЫЛАР:
+- Әр оқушы «Кабинет» -> «Тіркелу» арқылы жеке логин, аты-жөні, сыныбы, пароль жасайды.
+- Нәтижелері әр тесттен кейін автоматты түрде Supabase-ке жіберіледі.
+- Мұғалім кабинетінде барлық оқушының орташа %, ең жоғары %, тест саны, әлсіз тақырыптары, соңғы белсенділігі көрінеді.
+
+ҚАУІПСІЗДІК:
+- service_role кілтін ЕШҚАШАН config.js-ке салмаңыз.
+- Сайтта тек public anon/publishable key қолданылады; мәліметті RLS қорғайды.
