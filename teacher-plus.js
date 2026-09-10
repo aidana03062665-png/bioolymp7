@@ -71,3 +71,59 @@ function bind(){
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind);else bind();
 })();
+
+(function(){
+'use strict';
+function q(s,r=document){return r.querySelector(s)}
+function qa(s,r=document){return [...r.querySelectorAll(s)]}
+function val(t){const m=String(t||'').match(/-?\d+/);return m?Number(m[0]):0}
+function clean(s){return String(s||'').trim()}
+
+function addToolbar(){
+  const teacher=q('#teacherData'); const table=q('#studentsBody');
+  if(!teacher||!table||q('#tpTools'))return;
+  const panel=table.closest('.pro-panel'); if(!panel)return;
+  const tools=document.createElement('div'); tools.id='tpTools';
+  tools.style.cssText='display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 2px';
+  tools.innerHTML=`<input id="tpSearch" placeholder="🔎 Оқушыны іздеу" style="flex:1;min-width:190px;border:1px solid #cfe5da;border-radius:12px;padding:10px 12px;background:#fff"><select id="tpSort" style="border:1px solid #cfe5da;border-radius:12px;padding:10px;background:#fff"><option value="default">Сұрыптау</option><option value="avg-desc">Орташа ↓</option><option value="avg-asc">Орташа ↑</option><option value="tests-desc">Тест саны ↓</option><option value="name">Аты-жөні A–Я</option></select><button id="tpExport" class="btn btnG" style="min-height:40px">⬇️ Excel/CSV</button>`;
+  const head=q('.pro-section-title',panel); if(head) head.insertAdjacentElement('afterend',tools); else panel.prepend(tools);
+  q('#tpSearch').addEventListener('input',apply);
+  q('#tpSort').addEventListener('change',apply);
+  q('#tpExport').addEventListener('click',exportCSV);
+  apply();
+}
+
+function rows(){
+  return qa('#studentsBody tr').filter(tr=>qa('td',tr).length>=7);
+}
+function apply(){
+  const body=q('#studentsBody'); if(!body)return;
+  const term=clean(q('#tpSearch')?.value).toLocaleLowerCase('kk');
+  const mode=q('#tpSort')?.value||'default';
+  let rs=rows();
+  rs.forEach(tr=>{tr.style.display=clean(tr.textContent).toLocaleLowerCase('kk').includes(term)?'':'none'});
+  rs=[...rs].sort((a,b)=>{
+    const A=qa('td',a),B=qa('td',b);
+    if(mode==='avg-desc')return val(B[2].textContent)-val(A[2].textContent);
+    if(mode==='avg-asc')return val(A[2].textContent)-val(B[2].textContent);
+    if(mode==='tests-desc')return val(B[4].textContent)-val(A[4].textContent);
+    if(mode==='name')return clean(A[0].textContent).localeCompare(clean(B[0].textContent),'kk');
+    return 0;
+  });
+  rs.forEach(tr=>body.appendChild(tr));
+}
+
+function csvCell(s){return '"'+String(s??'').replace(/"/g,'""').replace(/\s+/g,' ').trim()+'"'}
+function exportCSV(){
+  const visible=rows().filter(tr=>tr.style.display!=='none');
+  const data=[['Оқушы','Сынып','Орташа %','Үздік %','Тест саны','80%+ тақырып','Соңғы белсенділік']];
+  visible.forEach(tr=>{const td=qa('td',tr);data.push([clean(td[0].innerText).replace(/@\S+/,'').trim(),clean(td[1].innerText),val(td[2].innerText),val(td[3].innerText),val(td[4].innerText),val(td[5].innerText),clean(td[6].innerText)])});
+  const csv='\ufeff'+data.map(r=>r.map(csvCell).join(';')).join('\r\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}); const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob); a.download='BioOlymp7_оқушылар_нәтижесі.csv'; document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1200);
+}
+
+let tm=0;function tick(){clearTimeout(tm);tm=setTimeout(()=>{addToolbar();apply()},120)}
+const obs=new MutationObserver(tick); obs.observe(document.documentElement,{childList:true,subtree:true});
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',tick);else tick();
+})();

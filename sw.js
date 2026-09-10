@@ -1,4 +1,4 @@
-const CACHE='bioolym7-v6-teacher-plus';
+const CACHE='bioolym7-v7-teacher-tools';
 const CORE=[
   './',
   './index.html',
