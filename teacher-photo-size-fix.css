@@ -1,0 +1,71 @@
+/* TEACHER PHOTO SIZE FIX */
+
+/* main teacher photo on homepage */
+#teacherHomePhoto,
+.hero #teacherHomePhoto,
+img#teacherHomePhoto {
+  width: 118px !important;
+  height: 118px !important;
+  max-width: 118px !important;
+  min-width: 118px !important;
+  object-fit: cover !important;
+  object-position: center top !important;
+  border-radius: 22px !important;
+  display: block !important;
+  box-shadow: 0 10px 24px rgba(23,52,43,.12) !important;
+}
+
+/* photo inside teacher / motivation cards */
+.photo-check-banner img,
+.teacher-login-card img,
+.teacher-card img,
+.motivation img,
+.profile-photo,
+[class*="teacher-photo"] img,
+[class*="teacherPhoto"] img {
+  object-fit: cover !important;
+  object-position: center top !important;
+  border-radius: 22px !important;
+}
+
+/* if left-side teacher card is too huge */
+.teacher-login-card,
+.teacher-card,
+.photo-check-banner {
+  overflow: hidden !important;
+}
+
+/* keep section layout neat */
+@media (min-width: 901px) {
+  #teacherHomePhoto,
+  .hero #teacherHomePhoto,
+  img#teacherHomePhoto {
+    width: 118px !important;
+    height: 118px !important;
+    max-width: 118px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  #teacherHomePhoto,
+  .hero #teacherHomePhoto,
+  img#teacherHomePhoto {
+    width: 102px !important;
+    height: 102px !important;
+    max-width: 102px !important;
+    min-width: 102px !important;
+    border-radius: 20px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  #teacherHomePhoto,
+  .hero #teacherHomePhoto,
+  img#teacherHomePhoto {
+    width: 92px !important;
+    height: 92px !important;
+    max-width: 92px !important;
+    min-width: 92px !important;
+    border-radius: 18px !important;
+  }
+}
