@@ -1,4 +1,4 @@
-const CACHE='bioolym7-v5-photos';
+const CACHE='bioolym7-v6-teacher-plus';
 const CORE=[
   './',
   './index.html',
@@ -9,6 +9,7 @@ const CORE=[
   './config.js',
   './app-pro.js',
   './photo-fix.js',
+  './teacher-plus.js',
   './teacher-original.jpg',
   './teacher-original-2.jpg',
   './teacher-success.jpg',
@@ -16,9 +17,7 @@ const CORE=[
 ];
 
 self.addEventListener('install',e=>{
-  e.waitUntil(
-    caches.open(CACHE).then(c=>c.addAll(CORE).catch(()=>Promise.resolve()))
-  );
+  e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE).catch(()=>Promise.resolve())));
   self.skipWaiting();
 });
 
@@ -42,6 +41,9 @@ function inject(html){
   }
   if(!html.includes('photo-fix.js')){
     html=html.replace('</body>','<script src="./photo-fix.js"></script></body>');
+  }
+  if(!html.includes('teacher-plus.js')){
+    html=html.replace('</body>','<script src="./teacher-plus.js"></script></body>');
   }
   return html;
 }
@@ -71,20 +73,16 @@ async function navigationResponse(req){
 }
 
 self.addEventListener('fetch',e=>{
-  if(e.request.method!=='GET') return;
-
+  if(e.request.method!=='GET')return;
   if(e.request.mode==='navigate'){
     e.respondWith(navigationResponse(e.request));
     return;
   }
-
-  e.respondWith(
-    caches.match(e.request).then(r=>r||fetch(e.request).then(resp=>{
-      if(resp.ok && new URL(e.request.url).origin===self.location.origin){
-        const copy=resp.clone();
-        caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{});
-      }
-      return resp;
-    }))
-  );
+  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(resp=>{
+    if(resp.ok&&new URL(e.request.url).origin===self.location.origin){
+      const copy=resp.clone();
+      caches.open(CACHE).then(c=>c.put(e.request,copy)).catch(()=>{});
+    }
+    return resp;
+  })));
 });
