@@ -1,0 +1,88 @@
+/* BIOOLYMP 7 CLEANUP PATCH */
+/* 1) hide old colorful/sticker-like elements */
+.dna,
+.microscope,
+.leaf,
+.orb,
+#superwowBadges,
+.superwow-ribbon,
+.wow-hero-tags,
+#superwowStars,
+#wowFloating,
+.wow-floating,
+.wow-kazakh-line,
+.superwow-corner-badges,
+.superwow-stars,
+.wow-tag,
+[class*="sticker"],
+[class*="dna"],
+[class*="microscope"],
+[class*="leaf"] {
+  display: none !important;
+}
+
+/* 2) keep only one inspiration block */
+#wowQuoteBar,
+.photo-check-banner {
+  display: none !important;
+}
+
+#elegantQuoteBar {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 0;
+}
+
+/* 3) restore calmer visuals */
+.hero {
+  min-height: 360px !important;
+}
+
+/* 4) teacher photo sizes */
+#teacherHomePhoto,
+.hero #teacherHomePhoto {
+  width: 120px !important;
+  height: 120px !important;
+  max-width: 120px !important;
+  border-radius: 18px !important;
+  object-fit: cover !important;
+}
+
+.elegant-teacher-chip img {
+  width: 56px !important;
+  height: 56px !important;
+  border-radius: 16px !important;
+}
+
+#elegantQuoteBar img {
+  width: 46px !important;
+  height: 46px !important;
+  border-radius: 13px !important;
+  object-fit: cover !important;
+}
+
+/* 5) calmer main feature photo area */
+.teacherPhotoCard img,
+.teacher-login-card img {
+  object-fit: cover !important;
+}
+
+/* 6) subtle section spacing */
+#home .stats + .photo-check-banner,
+#home #wowQuoteBar + .photo-check-banner {
+  display: none !important;
+}
+
+@media (max-width: 620px) {
+  #teacherHomePhoto,
+  .hero #teacherHomePhoto {
+    width: 104px !important;
+    height: 104px !important;
+    max-width: 104px !important;
+  }
+  .elegant-teacher-chip img {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
