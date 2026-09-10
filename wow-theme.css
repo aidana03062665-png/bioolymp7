@@ -1,0 +1,211 @@
+:root{
+  --green:#0a8c63;
+  --green2:#1fbf86;
+  --mint:#e9fff5;
+  --lime:#d2ff72;
+  --yellow:#ffd66e;
+  --pink:#ff85c7;
+  --sky:#71b8ff;
+  --violet:#8b8cff;
+  --deep:#0c2230;
+  --paper:#f6fbff;
+  --card:#ffffffd9;
+  --line:#d8ede7;
+  --text:#15342b;
+  --muted:#638178;
+  --shadow:0 18px 50px rgba(17,66,50,.10);
+}
+html,body{overflow-x:hidden}
+body.wow-mode{
+  background:
+    radial-gradient(circle at 8% 10%, rgba(255,133,199,.15), transparent 26rem),
+    radial-gradient(circle at 90% 12%, rgba(113,184,255,.16), transparent 28rem),
+    radial-gradient(circle at 30% 78%, rgba(210,255,114,.16), transparent 30rem),
+    linear-gradient(180deg,#fcffff 0%,#f6fff9 42%,#f8fbff 100%);
+  color:var(--text);
+}
+body.wow-mode::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:-2;
+  background-image:
+    linear-gradient(rgba(10,140,99,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,140,99,.035) 1px, transparent 1px);
+  background-size:28px 28px;
+  mask-image:linear-gradient(180deg,rgba(0,0,0,.4),transparent 82%);
+}
+body.wow-mode::after{
+  content:"";position:fixed;inset:auto -10% -18% auto;width:38rem;height:38rem;border-radius:50%;
+  background:radial-gradient(circle, rgba(31,191,134,.20), transparent 60%);
+  pointer-events:none;z-index:-1;filter:blur(22px);
+}
+.topbar{
+  background:rgba(255,255,255,.70)!important;
+  border-bottom:1px solid rgba(255,255,255,.55)!important;
+  box-shadow:0 8px 35px rgba(26,76,58,.06);
+}
+.topbar-inner{max-width:1280px}
+.brand-mark{
+  background:linear-gradient(135deg,#0c9368,#35d59d 54%, #9fff9c)!important;
+  box-shadow:0 10px 26px rgba(9,143,100,.28)!important;
+  position:relative;overflow:hidden;
+}
+.brand-mark::after{
+  content:"";position:absolute;inset:-35% auto auto -35%;width:90%;height:90%;border-radius:50%;
+  background:rgba(255,255,255,.22);filter:blur(6px)
+}
+.nav button{
+  position:relative;font-weight:800!important;border-radius:14px!important;padding:10px 14px!important
+}
+.nav button.active,.nav button:hover{
+  background:linear-gradient(135deg,#eafff3,#eef8ff)!important;
+  color:#0d825b!important;box-shadow:0 8px 18px rgba(31,191,134,.12)
+}
+.wow-quote-bar{
+  display:flex;align-items:center;gap:12px;margin:16px 0 0;padding:14px 18px;
+  border-radius:20px;background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(245,255,251,.95));
+  border:1px solid rgba(219,242,234,.95);box-shadow:var(--shadow);backdrop-filter:blur(16px)
+}
+.wow-quote-bar .wow-avatar{
+  width:64px;height:64px;border-radius:18px;object-fit:cover;flex:0 0 auto;border:3px solid rgba(255,255,255,.9);
+  box-shadow:0 10px 20px rgba(12,88,61,.12)
+}
+.wow-quote-bar strong{display:block;color:#0a8c63;font-size:17px}
+.wow-quote-bar p{margin:5px 0 0;color:#4f6e65;line-height:1.55;font-size:14px}
+.hero{
+  min-height:390px;
+  background:
+    linear-gradient(130deg, rgba(10,87,66,.93), rgba(15,138,96,.90) 42%, rgba(78,204,129,.88) 100%),
+    radial-gradient(circle at 15% 18%, rgba(255,255,255,.20), transparent 26rem),
+    radial-gradient(circle at 84% 20%, rgba(255,214,110,.20), transparent 20rem)!important;
+  border:1px solid rgba(255,255,255,.16);
+}
+.hero::before{width:460px!important;height:460px!important;right:-90px!important;top:-160px!important;border-color:rgba(255,255,255,.18)!important}
+.hero::after{width:320px!important;height:320px!important;right:22px!important;bottom:-180px!important;border-color:rgba(255,255,255,.14)!important}
+.hero h1{
+  text-shadow:0 8px 30px rgba(0,0,0,.14)
+}
+.hero p{font-size:18px!important;max-width:760px!important}
+.hero-actions .btn{
+  border-radius:16px!important;padding:13px 18px!important;font-weight:900!important
+}
+.btn-primary{box-shadow:0 14px 32px rgba(255,214,110,.22)!important}
+.btn-white,.btn-soft{
+  box-shadow:0 10px 20px rgba(255,255,255,.12)
+}
+.orb{
+  background:radial-gradient(circle at 28% 25%,#fdffb0,#8bf0ba 30%,#1aa774 72%)!important;
+  width:255px!important;height:255px!important;box-shadow:inset 0 0 0 16px rgba(255,255,255,.10),0 34px 70px rgba(0,0,0,.18)!important
+}
+.wow-hero-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+.wow-tag{
+  padding:8px 11px;border-radius:999px;font-size:12px;font-weight:900;
+  color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(12px)
+}
+.stats{gap:16px!important}
+.stat,.panel,.topic-card,.quick,.archive-card,.video-card,.gallery-card,.motivation,.pro-panel,.modal-card,.teacher-login-card,.tp-card,.qcard{
+  background:var(--card)!important;
+  backdrop-filter:blur(18px);
+  border:1px solid rgba(220,239,232,.9)!important;
+  box-shadow:0 14px 36px rgba(19,69,52,.07)!important;
+}
+.stat,.panel,.topic-card,.archive-card,.video-card,.gallery-card,.quick,.motivation,.pro-panel,.qcard,.teacher-login-card{position:relative;overflow:hidden}
+.stat::before,.panel::before,.topic-card::before,.archive-card::before,.video-card::before,.gallery-card::before,.quick::before,.pro-panel::before,.qcard::before{
+  content:"";position:absolute;inset:0 0 auto 0;height:4px;
+  background:linear-gradient(90deg,var(--green2),var(--sky),var(--pink),var(--lime));opacity:.90
+}
+.stat strong{font-size:30px!important;color:#0a8c63}
+.motivation{
+  background:linear-gradient(135deg,rgba(255,250,223,.92),rgba(238,255,243,.95),rgba(240,247,255,.92))!important
+}
+.motivation blockquote{font-size:26px!important}
+.section-head h2{
+  font-size:34px!important;letter-spacing:-.7px;
+  display:flex;align-items:center;gap:10px
+}
+.section-head h2 .wow-sec-icon{
+  width:44px;height:44px;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(135deg,#e8fff4,#eef5ff);box-shadow:inset 0 0 0 1px rgba(10,140,99,.12)
+}
+.search{
+  background:rgba(255,255,255,.90)!important;border:1px solid rgba(215,238,230,.95)!important;
+  box-shadow:0 8px 18px rgba(31,191,134,.07)
+}
+.topic-card{border-radius:22px!important}
+.topic-card h3{font-size:16px!important}
+.topic-card:hover,.quick:hover,.archive-card:hover,.video-card:hover,.gallery-card:hover,.stat:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 45px rgba(15,90,65,.13)!important
+}
+.score-badge{
+  background:linear-gradient(135deg,#f5fffa,#f6faff)!important;color:#0a8c63!important;border:1px solid #dcefe8!important
+}
+.progress{height:9px!important;background:#ebf4ef!important}
+.progress i{background:linear-gradient(90deg,#0db07d,#6ac8ff,#d1ff6f)!important}
+.quick-grid,.video-grid,.gallery-grid,.daryn-grid,.topic-grid{gap:16px!important}
+.quick b{font-size:16px}
+.video-thumb,.gallery-thumb{
+  background:linear-gradient(135deg,#e9fff2,#eef6ff,#fff5e8)!important
+}
+.ext,.pro-pill,.pill{
+  border-radius:999px!important;font-weight:900!important
+}
+.ext{
+  background:linear-gradient(135deg,#ebfff4,#edf7ff)!important;
+  border:1px solid #dceee6;color:#0a8c63!important
+}
+.modal{background:rgba(7,28,24,.62)!important}
+.modal-card{border-radius:28px!important}
+.modal-head{
+  background:linear-gradient(135deg,#f8fff9,#fbffff)!important
+}
+.option{
+  background:rgba(255,255,255,.84);
+  transition:.18s transform,.18s background,.18s box-shadow,.18s border-color
+}
+.option:hover{
+  transform:translateX(4px);
+  box-shadow:0 10px 18px rgba(10,140,99,.08)
+}
+.resultbox{
+  background:linear-gradient(135deg,#edfff5,#fffceb)!important;
+  border:1px solid #d7f0df!important
+}
+.teacher-login-card,.photo-check-banner{
+  background:linear-gradient(135deg,rgba(238,255,244,.95),rgba(255,251,230,.96),rgba(243,247,255,.94))!important
+}
+.photo-check-banner{
+  border:1px solid #dceee5;border-radius:22px;box-shadow:var(--shadow)
+}
+.wow-kazakh-line{
+  height:14px;border-radius:999px;margin:16px 0 0;
+  background:repeating-linear-gradient(90deg,#0a8c63 0 20px,#ffd66e 20px 40px,#ff85c7 40px 60px,#71b8ff 60px 80px,#d2ff72 80px 100px);
+  box-shadow:0 8px 16px rgba(10,140,99,.10)
+}
+.wow-floating{
+  position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:-1
+}
+.wow-bubble{
+  position:absolute;border-radius:50%;opacity:.16;animation:wowFloat linear infinite;
+  filter:blur(1px)
+}
+@keyframes wowFloat{
+  from{transform:translateY(0) rotate(0deg)}
+  to{transform:translateY(-120vh) rotate(240deg)}
+}
+.reveal-wow{opacity:0;transform:translateY(18px) scale(.985);transition:.55s ease}
+.reveal-wow.show{opacity:1;transform:none}
+.footer{
+  border-top:1px solid rgba(215,235,228,.85)!important;
+  font-size:13px!important;color:#60796f!important
+}
+@media(max-width:900px){
+  .hero{min-height:auto!important}
+  .orb{width:190px!important;height:190px!important}
+}
+@media(max-width:620px){
+  .wow-quote-bar{padding:12px 12px;border-radius:16px}
+  .wow-quote-bar .wow-avatar{width:56px;height:56px;border-radius:16px}
+  .section-head h2{font-size:28px!important}
+  .motivation blockquote{font-size:22px!important}
+  .hero p{font-size:16px!important}
+  .wow-kazakh-line{height:11px}
+}
