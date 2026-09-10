@@ -1,4 +1,4 @@
-const CACHE='bioolym7-v15-archive-halls';
+const CACHE='bioolym7-v16-illustrated-cartoon';
 const CORE=[
   './','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png',
   './mobile-wow.css','./archive-atlas.css','./archive-halls.css','./config.js','./app-pro.js','./photo-fix.js','./archive-atlas.js','./archive-halls.js',
