@@ -1,0 +1,92 @@
+:root{
+  --tr-green:#1f7a5d;
+  --tr-green-2:#2f9672;
+  --tr-cream:#fffaf0;
+  --tr-red:#b74848;
+  --tr-red-soft:#ffe6e6;
+  --tr-yellow:#f2c867;
+  --tr-shadow:0 20px 60px rgba(18,48,39,.22);
+}
+.teacher-reaction-overlay{
+  position:fixed;inset:0;z-index:10000;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(16,34,29,.48);
+  backdrop-filter:blur(4px);
+  padding:18px;
+}
+.teacher-reaction-overlay.hide{opacity:0;visibility:hidden;transition:.35s ease}
+.teacher-reaction-card{
+  width:min(92vw,860px);
+  display:grid;grid-template-columns:280px 1fr;
+  gap:18px;
+  background:linear-gradient(180deg,#fffefc,#f9fbf8);
+  border-radius:30px;
+  overflow:hidden;
+  box-shadow:var(--tr-shadow);
+  border:1px solid rgba(255,255,255,.7);
+  animation:teacherPop .38s ease;
+}
+.teacher-reaction-card.strict{background:linear-gradient(180deg,#fff9f9,#fff1f1)}
+.teacher-reaction-card.good{background:linear-gradient(180deg,#fffef9,#f7fbf7)}
+.teacher-reaction-photoWrap{
+  position:relative;
+  min-height:330px;
+  background:linear-gradient(135deg,#dcebe2,#eff6f1);
+}
+.teacher-reaction-card.strict .teacher-reaction-photoWrap{background:linear-gradient(135deg,#f7dede,#fff0f0)}
+.teacher-reaction-card.good .teacher-reaction-photoWrap{background:linear-gradient(135deg,#e2f2e7,#f3faf5)}
+.teacher-reaction-photo{
+  width:100%;height:100%;object-fit:cover;display:block;
+}
+.teacher-reaction-badge{
+  position:absolute;left:14px;top:14px;padding:8px 12px;border-radius:999px;
+  background:rgba(255,255,255,.92);font-size:12px;font-weight:900;color:#26463b;
+  box-shadow:0 8px 18px rgba(0,0,0,.08);
+}
+.teacher-reaction-main{padding:24px 24px 20px 4px;display:flex;flex-direction:column;justify-content:center}
+.teacher-reaction-kicker{
+  display:inline-block;align-self:flex-start;margin-bottom:10px;padding:8px 12px;border-radius:999px;
+  background:#edf7f1;color:var(--tr-green);font-size:12px;font-weight:900;
+}
+.teacher-reaction-card.strict .teacher-reaction-kicker{background:#ffe8e8;color:var(--tr-red)}
+.teacher-reaction-title{margin:0 0 8px;font-size:38px;line-height:1.04;color:#16382f;letter-spacing:-.9px}
+.teacher-reaction-card.strict .teacher-reaction-title{color:#7d2424}
+.teacher-reaction-meta{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
+.teacher-reaction-pill{
+  padding:8px 12px;border-radius:999px;background:#f5f8f6;border:1px solid #e1ece4;color:#315749;font-weight:800;font-size:13px;
+}
+.teacher-reaction-card.strict .teacher-reaction-pill{background:#fff6f6;border-color:#f3d5d5;color:#8b3838}
+.teacher-reaction-message{
+  font-size:17px;line-height:1.68;color:#4e675d;margin:0 0 16px;
+}
+.teacher-reaction-quote{
+  padding:14px 16px;border-radius:18px;background:#f7faf8;border:1px solid #e1ece5;color:#2c4c40;font-weight:700;line-height:1.6;margin-bottom:16px;
+}
+.teacher-reaction-card.strict .teacher-reaction-quote{background:#fff7f7;border-color:#f0d2d2;color:#7e3131}
+.teacher-reaction-actions{display:flex;flex-wrap:wrap;gap:10px}
+.teacher-reaction-btn{
+  border:0;border-radius:16px;padding:12px 16px;font-weight:900;cursor:pointer;font-size:15px;
+}
+.teacher-reaction-btn.primary{background:linear-gradient(135deg,var(--tr-green),var(--tr-green-2));color:#fff}
+.teacher-reaction-btn.secondary{background:#edf4ef;color:#1e493c}
+.teacher-reaction-card.strict .teacher-reaction-btn.primary{background:linear-gradient(135deg,#b74848,#d96868)}
+.teacher-reaction-shake{animation:teacherShake .55s ease 1}
+.teacher-reaction-stars{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.teacher-reaction-stars i{
+  position:absolute;width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.78);animation:teacherFloat 5s ease-in-out infinite;
+}
+.teacher-reaction-stars i:nth-child(1){left:14%;top:16%}
+.teacher-reaction-stars i:nth-child(2){right:16%;top:12%;animation-delay:.7s}
+.teacher-reaction-stars i:nth-child(3){left:20%;bottom:17%;animation-delay:1.4s}
+.teacher-reaction-stars i:nth-child(4){right:24%;bottom:16%;animation-delay:2.2s}
+.teacher-reaction-stars i:nth-child(5){left:48%;top:7%;animation-delay:2.8s}
+@keyframes teacherPop{from{transform:translateY(22px) scale(.97);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+@keyframes teacherFloat{50%{transform:translateY(-8px) scale(1.08)}}
+@keyframes teacherShake{15%{transform:translateX(-7px)}30%{transform:translateX(6px)}45%{transform:translateX(-5px)}60%{transform:translateX(4px)}75%{transform:translateX(-3px)}100%{transform:translateX(0)}}
+@media(max-width:760px){
+  .teacher-reaction-card{grid-template-columns:1fr}
+  .teacher-reaction-photoWrap{min-height:240px}
+  .teacher-reaction-main{padding:0 18px 18px}
+  .teacher-reaction-title{font-size:30px}
+  .teacher-reaction-message{font-size:16px}
+}

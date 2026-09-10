@@ -1,17 +1,17 @@
-const CACHE='bioolym7-v18-teacher-photo-fix';
+const CACHE='bioolym7-v19-teacher-reaction';
 const CORE=[
   './', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png',
-  './mobile-wow.css', './bio-world.css', './teacher-photo-size-fix.css',
-  './config.js', './app-pro.js', './photo-fix.js', './teacher-plus.js', './bio-world.js', './teacher-photo-size-fix.js',
+  './mobile-wow.css', './bio-world.css', './teacher-photo-size-fix.css', './teacher-reaction.css',
+  './config.js', './app-pro.js', './photo-fix.js', './teacher-plus.js', './bio-world.js', './teacher-photo-size-fix.js', './teacher-reaction.js',
   './teacher-original.jpg', './teacher-original-2.jpg', './teacher-success.jpg', './teacher-strict.jpg'
 ];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE).catch(()=>Promise.resolve())));self.skipWaiting();});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
 function inject(html){
-  const headAdds=['./mobile-wow.css','./bio-world.css','./teacher-photo-size-fix.css'];
+  const headAdds=['./mobile-wow.css','./bio-world.css','./teacher-photo-size-fix.css','./teacher-reaction.css'];
   headAdds.forEach(h=>{ if(!html.includes(h)) html=html.replace('</head>',`<link rel="stylesheet" href="${h}"></head>`); });
   if(!html.includes('./config.js')) html=html.replace('</body>','<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="./config.js"></script><script src="./app-pro.js"></script></body>');
-  ['./photo-fix.js','./teacher-plus.js','./bio-world.js','./teacher-photo-size-fix.js'].forEach(s=>{ if(!html.includes(s)) html=html.replace('</body>',`<script src="${s}"></script></body>`); });
+  ['./photo-fix.js','./teacher-plus.js','./bio-world.js','./teacher-photo-size-fix.js','./teacher-reaction.js'].forEach(s=>{ if(!html.includes(s)) html=html.replace('</body>',`<script src="${s}"></script></body>`); });
   return html;
 }
 async function navigationResponse(req){
