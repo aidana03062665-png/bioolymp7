@@ -125,7 +125,7 @@ function openTopic(id){
   const t=topicById(id);if(!t)return;
   q('#topicModalTitle').textContent=t.title;
   const concepts=t.concepts.map(c=>`<div class="panel" style="box-shadow:none;margin:8px 0"><b style="color:var(--green)">${esc(c.term)}</b><p style="margin:5px 0;color:var(--muted);line-height:1.5">${esc(c.def)}</p></div>`).join('');
-  q('#topicModalBody').innerHTML=`<div style="padding:18px"><div class="panel" style="box-shadow:none;background:#f7fbf8"><h3 style="margin-top:0">Қысқаша конспект</h3><p style="line-height:1.65">${esc(t.summary)}</p><div class="mini-pill">Olymp tip: ${esc(t.olympTip||'Терминдерді байланыспен түсін.')}</div></div><h3>Негізгі ұғымдар</h3>${concepts}<div class="form-row" style="margin-top:14px"><button class="btn green" id="topicStartTest">15 сұрақ</button><a class="btn soft" style="text-decoration:none" href="biology7.pdf#page=${Math.max(1,Number(t.page)||1)}" target="_blank">Оқулық бетін ашу</a><a class="btn ghost" style="text-decoration:none" href="${esc(t.youtubeSearch||'#')}" target="_blank" rel="noopener">Видео іздеу</a></div></div>`;
+  q('#topicModalBody').innerHTML=`<div style="padding:18px"><div class="panel" style="box-shadow:none;background:#f7fbf8"><h3 style="margin-top:0">Қысқаша конспект</h3><p style="line-height:1.65">${esc(t.summary)}</p><div class="mini-pill">Olymp tip: ${esc(t.olympTip||'Терминдерді байланыспен түсін.')}</div></div><h3>Негізгі ұғымдар</h3>${concepts}<div class="form-row" style="margin-top:14px"><button class="btn green" id="topicStartTest">15 сұрақ</button><a class="btn soft" style="text-decoration:none" href="assets/biology7.pdf#page=${Math.max(1,Number(t.page)||1)}" target="_blank">Оқулық бетін ашу</a><a class="btn ghost" style="text-decoration:none" href="${esc(t.youtubeSearch||'#')}" target="_blank" rel="noopener">Видео іздеу</a></div></div>`;
   q('#topicStartTest').onclick=()=>{closeModal('topicModal');startTopicTest(id)};
   openModal('topicModal');
 }
@@ -176,7 +176,7 @@ function findQuestionByKey(key){
 function startQuiz(opts){
   stopTimer();
   const questions=opts.questions||[];if(!questions.length){toast('Сұрақ табылмады');return}
-  state.quiz={title:opts.title||'Тест',type:opts.type||'random',topicId:opts.topicId??null,questions,answers:{},startedAt:Date.now(),timeLimit:opts.timeLimit||0,assignmentId:opts.assignmentId||null,submitted:false};
+  state.quiz={title:opts.title||'Тест',type:opts.type||'random',topicId:opts.topicId??null,questions,answers:{},startedAt:Date.now(),timeLimit:opts.timeLimit||0,assignmentId:opts.assignmentId||null,meta:opts.meta||null,submitted:false};
   q('#quizTitle').textContent=state.quiz.title;q('#quizModeLabel').textContent=opts.type==='olympiad'?'OLYMPIAD MODE':'BIOOLYMP 7';
   renderQuiz();openModal('quizModal');
   if(state.quiz.timeLimit)startTimer(state.quiz.timeLimit);
@@ -198,12 +198,13 @@ async function submitQuiz(auto){
   let correct=0;const wrong=[];
   z.questions.forEach((x,i)=>{const a=z.answers['q'+i];if(a===x.answer){correct++;markMistakeCorrect(x)}else{wrong.push(x);markMistakeWrong(x)}});
   const total=z.questions.length,score=Math.round(correct/total*100),duration=Math.round((Date.now()-z.startedAt)/1000);
-  const result={id:'local-'+Date.now(),user_id:state.profile?.id||null,test_type:z.type,topic_id:z.topicId,title:z.title,score,correct,total,duration_seconds:duration,assignment_id:z.assignmentId||null,created_at:new Date().toISOString()};
+  const result={id:'local-'+Date.now(),user_id:state.profile?.id||null,test_type:z.type,topic_id:z.topicId,title:z.title,score,correct,total,duration_seconds:duration,assignment_id:z.assignmentId||null,created_at:new Date().toISOString(),meta:z.meta||null};
   state.results.push(result);saveLS('bio7_results',state.results);renderHome();
   await saveResultRemote(result);await syncMistakesRemote(wrong);
   const root=q('#quizBody');root.innerHTML=`<div class="quiz-body"><div class="result-box"><span class="eyebrow">НӘТИЖЕ</span><div><b>${score}%</b></div><p>${correct}/${total} дұрыс • ${wrong.length} қате • ${Math.max(1,Math.round(duration/60))} мин</p><div class="form-row"><button class="btn green" id="resultErrors">Ошибкалармен жұмыс</button><button class="btn soft" id="resultClose">Жабу</button></div></div>${wrong.length?`<h3>Қате кеткен сұрақтар</h3>${wrong.slice(0,10).map(x=>`<div class="mistake-item"><b>${esc(topicById(x.topicId)?.title||'')}</b><p>${esc(x.q)}</p></div>`).join('')}`:''}</div>`;
   q('#resultErrors').onclick=()=>{closeModal('quizModal');go('mistakes')};q('#resultClose').onclick=()=>closeModal('quizModal');
   showReaction(wrong.length,total,score);
+  try{window.dispatchEvent(new CustomEvent('bioolymp:result',{detail:{result,wrong,questions:z.questions,meta:z.meta||null}}))}catch(e){}
 }
 
 function markMistakeWrong(x){
@@ -227,7 +228,7 @@ const REACTIONS=[
   {max:999,photo:'teacher-strict.jpg',strict:true,title:['Нет. Просто нет 😭😂','Так, начинаем сначала. Без вариантов.','Я сейчас даже комментировать не буду… почти 😭'],text:['Оқулықты аш. Прямо сейчас.','Сначала разберём базу, потом вернёмся в тест.']}
 ];
 function showReaction(errors,total,score){
-  const v=REACTIONS.find(x=>errors<=x.max)||REACTIONS.at(-1);const title=v.title[Math.floor(Math.random()*v.title.length)],text=v.text[Math.floor(Math.random()*v.text.length)];const card=q('#reactionCard');card.className='reaction-card'+(v.strict?' strict':'');card.innerHTML=`<div class="reaction-photo"><img src="${v.photo}" alt="Айдана апай"></div><div class="reaction-copy"><span class="eyebrow">${errors} ҚАТЕ • ${score}%</span><h2>${esc(title)}</h2><p>${esc(text)}</p><div class="form-row"><button class="btn ${v.strict?'danger':'green'}" id="reactionErrors">Работа над ошибками</button><button class="btn ghost" id="reactionClose">Жабу</button></div></div>`;q('#reactionErrors').onclick=()=>{closeModal('reactionModal');closeModal('quizModal');go('mistakes')};q('#reactionClose').onclick=()=>closeModal('reactionModal');openModal('reactionModal')
+  const v=REACTIONS.find(x=>errors<=x.max)||REACTIONS.at(-1);const title=v.title[Math.floor(Math.random()*v.title.length)],text=v.text[Math.floor(Math.random()*v.text.length)];const card=q('#reactionCard');card.className='reaction-card'+(v.strict?' strict':'');card.innerHTML=`<div class="reaction-photo"><img src="assets/${v.photo}" alt="Айдана апай"></div><div class="reaction-copy"><span class="eyebrow">${errors} ҚАТЕ • ${score}%</span><h2>${esc(title)}</h2><p>${esc(text)}</p><div class="form-row"><button class="btn ${v.strict?'danger':'green'}" id="reactionErrors">Работа над ошибками</button><button class="btn ghost" id="reactionClose">Жабу</button></div></div>`;q('#reactionErrors').onclick=()=>{closeModal('reactionModal');closeModal('quizModal');go('mistakes')};q('#reactionClose').onclick=()=>closeModal('reactionModal');openModal('reactionModal')
 }
 
 function printCurrentQuiz(){
@@ -305,4 +306,5 @@ function initPwa(){window.addEventListener('beforeinstallprompt',e=>{e.preventDe
 
 function init(){bindShell();renderHome();renderStudy();renderTestBuilder();renderOlympiadSetup();renderMistakes();renderAssignments();renderRating();renderAccount();initPwa();initSupabase();syncRoleUI()}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+window.BioOlympCore={state,startQuiz,go,allBaseQuestions,allProQuestions,shuffle,topicById,renderHome,renderAccount,renderRating,loadLeaderboard,weekStart,toast,bestByTopic,stats,levelInfo};
 })();
