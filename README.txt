@@ -1,19 +1,14 @@
-BIOOLYMP7 — ILLUSTRATED CARTOON ELEGANT v16
+BIOOLYMP 7 — FOLDER-SIZ FLAT FIX
 
-Бұл жаңа patch ЕСКІ файлдардың үстіне тағы дизайн қоспайды.
-Тек бар 3 файлды ауыстырады:
-1) archive-atlas.css
-2) archive-halls.css
+GitHub папкамен upload жасамаса, осы 5 файлды жеке upload ет:
+1) index.html
+2) app.js
 3) sw.js
+4) topics.js
+5) olympiad.js
 
-Нәтиже:
-- минимализм азайды
-- elegant cartoon / illustrated science стилі
-- ми-архив көлемді, кітапхана тірілеу
-- жұмсақ 3D, shadows, hand-drawn feel
-- залдар түрлі жұмсақ реңкпен бөлінеді
-- emoji/sticker DNA/microscope/leaf жоқ
-- үлкен мұғалім фото блогы сақталады
+Бәрі repo түбірінде (root) тұруы керек.
+Existing teacher photos және biology7.pdf root-та бар, оларды қайта салудың қажеті жоқ.
 
-GitHub -> Add file -> Upload files -> осы 3 файл -> Commit changes
-1-2 минут күту -> Ctrl+Shift+R
+Commit changes -> 1-2 минут -> Ctrl+Shift+R.
+Телефонда сайтты толық жауып, қайта аш.

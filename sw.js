@@ -1,5 +1,5 @@
-const CACHE='bioolym7-final-v1';
-const CORE=['./','./index.html','./styles.css','./app.js','./config.js','./manifest.webmanifest','./icon-192.png','./icon-512.png','./data/topics.js','./data/olympiad.js','./assets/teacher-original.jpg','./assets/teacher-original-2.jpg','./assets/teacher-success.jpg','./assets/teacher-strict.jpg'];
+const CACHE='bioolym7-final-v2-flat';
+const CORE=['./','./index.html','./styles.css','./app.js','./config.js','./manifest.webmanifest','./icon-192.png','./icon-512.png','./topics.js','./olympiad.js','./teacher-original.jpg','./teacher-original-2.jpg','./teacher-success.jpg','./teacher-strict.jpg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{
